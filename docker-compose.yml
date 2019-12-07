@@ -1,0 +1,48 @@
+version: '3'
+services:
+  mysql:
+    container_name: kl_mysql
+    image: mysql:8
+    volumes:
+      - ./db/data:/var/lib/mysql
+    ports:
+      - "${DOCKER_MYSQL_PORT}:3306"
+    env_file:
+      - ./.env
+
+  flyway:
+    container_name: kl_flyway
+    image: flyway/flyway
+    command: "-url=jdbc:mysql://mysql -schemas=knights_landing -user=${MYSQL_USER} -password=${MYSQL_PASSWORD} -connectRetries=60 migrate"
+    volumes:
+      - ./db/migrations:/flyway/sql
+    links:
+      - mysql
+
+  api:
+    container_name: kl_api
+    image: leocavalcante/dwoole:dev
+    ports:
+      - "${DOCKER_API_PORT}:8001"
+    volumes:
+      - ./:/app
+    env_file:
+      - ./.env
+    environment:
+      ENTRY_POINT_FILE: /app/api/index.php
+    links:
+      - mysql
+
+  web:
+    container_name: kl_web
+    image: leocavalcante/dwoole:dev
+    ports:
+      - "${DOCKER_WEB_PORT}:8000"
+    volumes:
+      - ./:/app
+    env_file:
+      - ./.env
+    environment:
+      ENTRY_POINT_FILE: /app/web/index.php
+    links:
+      - api

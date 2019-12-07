@@ -1,0 +1,31 @@
+{
+    "name": "siler-examples/knights-landing",
+    "description": "Siler example of Swoole + API + Twig on Docker (Dwoole)",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "leocavalcante",
+            "email": "lc@leocavalcante.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "ext-pdo": "*",
+        "leocavalcante/siler": "dev-master",
+        "twig/twig": "^3.0",
+        "guzzlehttp/guzzle": "^6.4"
+    },
+    "require-dev": {
+        "swoole/ide-helper": "^4.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "KL\\": [
+                "src/",
+                "api/",
+                "web/"
+            ]
+        }
+    }
+}

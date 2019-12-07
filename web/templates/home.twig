@@ -1,0 +1,18 @@
+{% extends "_layout.twig" %}
+
+{% block content %}
+  <article class="page page-home">
+    <table>
+      {% for knight in knights %}
+        <tr id="knight-tr-{{ knight.id }}">
+          <td>{{ knight.id }}</td>
+          <td>{{ knight.name }}</td>
+          <td>{{ knight.timestamp|date("d/m H:i:s") }}</td>
+          <td>
+            <button class="js-delete-btn" data-id="{{ knight.id }}">Delete</button>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </article>
+{% endblock %}
